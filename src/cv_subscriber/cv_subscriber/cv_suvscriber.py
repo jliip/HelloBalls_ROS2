@@ -24,10 +24,10 @@ class ImageSubscriberNode(Node):
 
         # Process the image (for example, convert to grayscale)
         gray_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
-
-        # Display the image
-        cv2.imshow("Camera Feed", gray_image)
-        cv2.waitKey(1)
+        
+        # Process the image further if needed, but don't display it
+        # cv2.imshow("Camera Feed", gray_image)  # Remove this line
+        # cv2.waitKey(1)  # Remove this line
 
 def main(args=None):
     rclpy.init(args=args)

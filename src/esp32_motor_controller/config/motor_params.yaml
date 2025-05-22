@@ -1,0 +1,6 @@
+esp32_motor_controller:
+  ros__parameters:
+    serial_port: /dev/ttyS1
+    baud_rate: 115200
+    parity: odd
+    motor_max_speed: 1000
