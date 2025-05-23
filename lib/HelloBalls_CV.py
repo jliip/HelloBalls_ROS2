@@ -12,7 +12,7 @@ import glob
 # Import path handling to find the YOLO API module
 script_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(script_dir)
-build_dir = os.path.join(parent_dir, "build")
+build_dir = os.path.join(parent_dir,"lib/", "yolo11_demo/","cpp/","build")
 sys.path.append(build_dir)
 
 # Try to import the YOLO API module
