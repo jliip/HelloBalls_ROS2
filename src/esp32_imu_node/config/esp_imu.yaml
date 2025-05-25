@@ -5,8 +5,9 @@ esp32_imu_node:
     frame_id: imu_link
     publish_rate: 100.0
     connect_retry_period: 5.0
+    use_binary_format: true
 
-# JSON format of imu input
+# JSON format of imu input (when use_binary_format is false):
 # {
   # "accel_x": 0.0, 
   # "accel_y": 0.0, 
@@ -19,3 +20,18 @@ esp32_imu_node:
   # "quat_y": 0.0, 
   # "quat_z": 0.0
 # }
+
+# Binary format structure (when use_binary_format is true):
+# Byte 0: mcu_state (uint8)
+# Byte 1: host_state (uint8)
+# Bytes 2-5: wheel1_distance (uint32, big endian)
+# Bytes 6-9: wheel2_distance (uint32, big endian)
+# Bytes 10-11: acc_x (int16, big endian)
+# Bytes 12-13: acc_y (int16, big endian)
+# Bytes 14-15: acc_z (int16, big endian)
+# Bytes 16-17: gyr_x (int16, big endian)
+# Bytes 18-19: gyr_y (int16, big endian)
+# Bytes 20-21: gyr_z (int16, big endian)
+#
+# Note: accelerometer values need to be divided by 16384.0 and multiplied by 9.81 to get m/s^2
+# Note: gyroscope values need to be divided by 131.0 and multiplied by π/180 to get rad/s

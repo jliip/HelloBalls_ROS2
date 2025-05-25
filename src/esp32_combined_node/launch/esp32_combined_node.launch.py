@@ -8,45 +8,44 @@ from ament_index_python.packages import get_package_share_directory
 import os
 
 def generate_launch_description():
-    config_dir = os.path.join(get_package_share_directory('esp32_imu_node'), 'config')
-    config_file = os.path.join(config_dir, 'esp_imu.yaml')
-    
-    # Declare arguments
+    # Launch arguments
     serial_port_arg = DeclareLaunchArgument(
         'serial_port',
         default_value='/dev/ttyS1',
-        description='Serial port for ESP32 IMU'
-    )
-
+        description='Serial port for ESP32 communication')
+        
     baud_rate_arg = DeclareLaunchArgument(
         'baud_rate',
         default_value='115200',
-        description='Baud rate for serial communication'
-    )
-
+        description='Baud rate for serial communication')
+        
     frame_id_arg = DeclareLaunchArgument(
         'frame_id',
         default_value='imu_link',
-        description='Frame ID for IMU messages'
-    )
-    
-    use_binary_format_arg = DeclareLaunchArgument(
-        'use_binary_format',
+        description='Frame ID for IMU messages')
+        
+    motor_max_speed_arg = DeclareLaunchArgument(
+        'motor_max_speed',
+        default_value='1000',
+        description='Maximum motor speed value')
+        
+    enable_auto_test_arg = DeclareLaunchArgument(
+        'enable_auto_test',
         default_value='True',
-        description='Use binary format (True) or JSON format (False)'
-    )
+        description='Enable automatic motor test sequence')
 
-    # IMU Node
-    esp32_imu_node = Node(
-        package='esp32_imu_node',
-        executable='esp32_imu_node',
-        name='esp32_imu_node',
+    # Combined node
+    combined_node = Node(
+        package='esp32_combined_node',
+        executable='esp32_combined_node',
+        name='esp32_combined_node',
         output='screen',
         parameters=[
             {'serial_port': LaunchConfiguration('serial_port')},
             {'baud_rate': LaunchConfiguration('baud_rate')},
             {'frame_id': LaunchConfiguration('frame_id')},
-            {'use_binary_format': LaunchConfiguration('use_binary_format')}
+            {'motor_max_speed': LaunchConfiguration('motor_max_speed')},
+            {'enable_auto_test': LaunchConfiguration('enable_auto_test')}
         ]
     )
     
@@ -54,6 +53,7 @@ def generate_launch_description():
         serial_port_arg,
         baud_rate_arg,
         frame_id_arg,
-        use_binary_format_arg,
-        esp32_imu_node
+        motor_max_speed_arg,
+        enable_auto_test_arg,
+        combined_node
     ])
